@@ -46,7 +46,7 @@ def search_new() -> None:
         output = json.dumps(formatted, indent=4)
         if not os.path.exists(os.path.join(os.getcwd(), output_dir)):
             os.mkdir(os.path.join(os.getcwd(), output_dir))
-        with open(output_dir + datetime().now().strftime("%Y%m%d%H%M%S") + ".json", "a+") as file:
+        with open(output_dir + datetime().now().strftime("%Y%m%d%H%M%S") + ".json", "a+", encoding="utf-8") as file:
             file.writelines(output)
         log(message=f"Generating JSON-File done.", level=Logger.NEW)
     log(message=f"Saving done after {timer.stop()} seconds.", level=Logger.NEW)
