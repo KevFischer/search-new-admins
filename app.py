@@ -41,12 +41,15 @@ def search_new() -> None:
     if output_type in ["CSV", "ALL"]:
         conv = JSON2CSV()
         conv.convert(keys=formatted[0].keys(), data=formatted, outdir=output_dir)
+        log(message=f"Generating CSV-File done.", level=Logger.NEW)
     if output_type in ["JSON", "ALL"]:
         output = json.dumps(formatted, indent=4)
         if not os.path.exists(os.path.join(os.getcwd(), output_dir)):
             os.mkdir(os.path.join(os.getcwd(), output_dir))
         with open(output_dir + datetime().now().strftime("%Y%m%d%H%M%S") + ".json", "a+") as file:
             file.writelines(output)
+        log(message=f"Generating JSON-File done.", level=Logger.NEW)
+    log(message=f"Saving done after {timer.stop()} seconds.", level=Logger.NEW)
     
     
 if __name__ == "__main__":
