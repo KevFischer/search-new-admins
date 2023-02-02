@@ -27,7 +27,7 @@ def search_new() -> None:
     data = filereader.read_2_recent_files(input_dir)
     new_admins = AdminSearch().search(data=data)
     formatted = [converter.convert(keys=data[0][0], values=admin) for admin in new_admins]
-    log(message=formatted, level=Logger.NEW)
+    log(message=f"Found {len(formatted)} new admins.", level=Logger.NEW)
     
     
 if __name__ == "__main__":
