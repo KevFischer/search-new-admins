@@ -13,7 +13,7 @@ class JSON2CSV:
             raise Exception(f"{Logger.ERROR[0]}Error: Data object can not be None.{Logger.ENDL[0]}")
         if not os.path.exists(os.path.join(os.getcwd(), outdir)):
             os.mkdir(os.path.join(os.getcwd(), outdir))
-        with open(outdir + datetime.now().strftime("%Y%m%d%H%M%S", ) + ".csv", "a+", encoding="utf-8") as file:
+        with open(outdir + datetime.now().strftime("%Y%m%d%H%M%S", ) + ".csv", "a+", encoding="utf-8", newline="") as file:
                 dict_writer = csv.DictWriter(file, keys)
                 dict_writer.writeheader()
                 dict_writer.writerows(data)

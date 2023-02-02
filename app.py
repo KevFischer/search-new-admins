@@ -8,7 +8,7 @@ from src.util.json2csv import JSON2CSV
 from src.util.timer import Timer
 from src.searchAdmins import AdminSearch
 from datetime import datetime
-import configparser, json
+import configparser, json, os
 
 
 fileConfig = configparser.ConfigParser()
@@ -40,13 +40,13 @@ def search_new() -> None:
     timer.start()
     if output_type in ["CSV", "ALL"]:
         conv = JSON2CSV()
-        conv.convert(keys=formatted[0].keys(), data=formatted, outdir=output_dir)
+        conv.convert(keys=formatted[0].keys(), data=formatted, outdir=os.path.join(os.getcwd(), output_dir))
         log(message=f"Generating CSV-File done.", level=Logger.NEW)
     if output_type in ["JSON", "ALL"]:
         output = json.dumps(formatted, indent=4)
         if not os.path.exists(os.path.join(os.getcwd(), output_dir)):
             os.mkdir(os.path.join(os.getcwd(), output_dir))
-        with open(output_dir + datetime().now().strftime("%Y%m%d%H%M%S") + ".json", "a+", encoding="utf-8") as file:
+        with open(os.path.join(os.getcwd(), output_dir) + datetime.now().strftime("%Y%m%d%H%M%S") + ".json", "a+", encoding="utf-8") as file:
             file.writelines(output)
         log(message=f"Generating JSON-File done.", level=Logger.NEW)
     log(message=f"Saving done after {timer.stop()} seconds.", level=Logger.NEW)
