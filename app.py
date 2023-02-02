@@ -26,7 +26,7 @@ converter = CSV2JSON()
 def search_new() -> None:
     data = filereader.read_2_recent_files(input_dir)
     new_admins = AdminSearch().search(data=data)
-    formatted = [converter.convert(keys=data[0][0], values=admin) for admin in new_admins]
+    formatted = [converter.convert(keys=data[0][0].split(","), values=admin.split(",")) for admin in new_admins]
     log(message=f"Found {len(formatted)} new admins.", level=Logger.NEW)
     
     
