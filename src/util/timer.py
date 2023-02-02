@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class Timer:
@@ -19,5 +19,5 @@ class Timer:
             raise Exception(f"{Logger.ERROR[0]}Error: Can not stop a not running timer.{Logger.ENDL[0]}")
         start = self.starttime
         self.starttime = None
-        return datetime.timedelta.total_seconds(datetime.datetime.now() - start)
+        return timedelta.total_seconds(datetime.datetime.now() - start)
         
