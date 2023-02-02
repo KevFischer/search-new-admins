@@ -19,6 +19,6 @@ class Filereader:
             data = []
             with open(file, "r", encoding="utf-8") as f:
                 for line in f.readlines():
-                    data.append(line.replace("\n", "").replace("\r", ""))
+                    data.append(line.replace("\n", "").replace("\r", "").replace("\ufeff", ""))
             all_data.append(data)
         return all_data
