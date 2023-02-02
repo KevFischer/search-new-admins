@@ -31,6 +31,7 @@ def search_new() -> None:
     timer.start()
     new_admins = AdminSearch().search(data=data)
     log(message=f"Admin search done after {timer.stop()} seconds.", level=Logger.NEW)
+    timer.start()
     formatted = [converter.convert(keys=data[0][0].split(","), values=admin.split(",")) for admin in new_admins]
     log(message=f"Converting to JSON format done after {timer.stop()} seconds.", level=Logger.NEW)
     log(message=f"Found {len(formatted)} new admins.", level=Logger.NEW)
