@@ -1,3 +1,6 @@
+from src.logging.logger import Logger
+
+
 class CSV2JSON:
     
     
