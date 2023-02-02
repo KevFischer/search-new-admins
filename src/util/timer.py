@@ -17,5 +17,7 @@ class Timer:
     def stop(self) -> float:
         if self.starttime is None:
             raise Exception(f"{Logger.ERROR[0]}Error: Can not stop a not running timer.{Logger.ENDL[0]}")
-        return datetime.timedelta.total_seconds(datetime.datetime.now() - self.starttime)
+        start = self.starttime
+        self.starttime = None
+        return datetime.timedelta.total_seconds(datetime.datetime.now() - start)
         

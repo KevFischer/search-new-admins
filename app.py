@@ -24,9 +24,15 @@ filereader = Filereader()
 converter = CSV2JSON()
 
 def search_new() -> None:
+    timer = Timer()
+    timer.start()
     data = filereader.read_2_recent_files(input_dir)
+    log(message=f"File reading done after {len(timer.stop())} seconds.", level=Logger.NEW)
+    timer.start()
     new_admins = AdminSearch().search(data=data)
+    log(message=f"Admin search done after {len(timer.stop())} seconds.", level=Logger.NEW)
     formatted = [converter.convert(keys=data[0][0].split(","), values=admin.split(",")) for admin in new_admins]
+    log(message=f"Converting to JSON format done after {len(timer.stop())} seconds.", level=Logger.NEW)
     log(message=f"Found {len(formatted)} new admins.", level=Logger.NEW)
     
     
