@@ -14,6 +14,6 @@ class JSON2CSV:
         if not os.path.exists(os.path.join(os.getcwd(), outdir)):
             os.mkdir(os.path.join(os.getcwd(), outdir))
         with open(outdir + datetime.now().strftime("%Y%m%d%H%M%S") + ".csv", "a+") as file:
-                dict_writer = csv.DictWriter(output_file, keys)
+                dict_writer = csv.DictWriter(file, keys)
                 dict_writer.writeheader()
                 dict_writer.writerows(data)
