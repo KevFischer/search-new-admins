@@ -8,7 +8,7 @@ class Filereader:
     def read_2_recent_files(self, dir: str=None) -> list:
         if dir is None:
             raise ValueError(f"{Logger.ERROR[0]}Error: Directory to read can not be NoneType object.{Logger.ENDL[0]}")
-        files = [path + file for file in os.listdir(dir)]
+        files = [dir + file for file in os.listdir(dir)]
         files.sort(key=os.path.getmtime, reverse=True)
         try:
             files = files[0:2]
