@@ -25,10 +25,11 @@ register_logger(f_logger)
 filereader = Filereader()
 converter = CSV2JSON()
 
-def search_new() -> None:
+def search_new(reverse: bool=False) -> None:
+    res_info = "new admins" if not reverse else "removed admins"
     timer = Timer()
     timer.start()
-    data = filereader.read_2_recent_files(input_dir)
+    data = filereader.read_2_recent_files(input_dir, reverse=reverse)
     log(message=f"File reading done after {timer.stop()} seconds.", level=Logger.NEW)
     timer.start()
     new_admins = AdminSearch().search(data=data)
@@ -36,21 +37,22 @@ def search_new() -> None:
     timer.start()
     formatted = [converter.convert(keys=data[0][0].split(","), values=admin.split(",")) for admin in new_admins]
     log(message=f"Converting to JSON format done after {timer.stop()} seconds.", level=Logger.NEW)
-    log(message=f"Found {len(formatted)} new admins.", level=Logger.NEW)
+    log(message=f"Found {len(formatted)} {res_info}.", level=Logger.NEW)
     timer.start()
     if output_type in ["CSV", "ALL"]:
         conv = JSON2CSV()
-        conv.convert(keys=formatted[0].keys(), data=formatted, outdir=os.path.join(os.getcwd(), output_dir))
+        conv.convert(keys=formatted[0].keys(), data=formatted, outdir=os.path.join(os.getcwd(), output_dir), file_str=res_info)
         log(message=f"Generating CSV-File done.", level=Logger.NEW)
     if output_type in ["JSON", "ALL"]:
         output = json.dumps(formatted, indent=4)
         if not os.path.exists(os.path.join(os.getcwd(), output_dir)):
             os.mkdir(os.path.join(os.getcwd(), output_dir))
-        with open(os.path.join(os.getcwd(), output_dir) + datetime.now().strftime("%Y%m%d%H%M%S") + ".json", "a+", encoding="utf-8") as file:
+        with open(os.path.join(os.getcwd(), output_dir) + datetime.now().strftime("%Y%m%d%H%M%S") + res_info + ".json", "a+", encoding="utf-8") as file:
             file.writelines(output)
         log(message=f"Generating JSON-File done.", level=Logger.NEW)
     log(message=f"Saving done after {timer.stop()} seconds.", level=Logger.NEW)
     
     
 if __name__ == "__main__":
-    search_new()
+    search_new(reverse=False)
+    search_new(reverse=True)
